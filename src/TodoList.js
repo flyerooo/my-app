@@ -47,6 +47,8 @@ class TodoList extends Component {
     return true;
   }
 
+  // 组件被更新之前，他会自动执行，但是在shouldComponentUpdate之后执行
+  // 如果shouldComponentUpdate返回true才会被执行
   componentWillUpdate(){
     console.log('componentWillUpdate')
   }
