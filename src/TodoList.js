@@ -9,14 +9,18 @@ class TodoList extends Component {
     this.state = {
       inputValue: '',
       list: []
-    }
+    };
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleBtnClick = this.handleBtnClick.bind(this);
     this.handleItemDelete = this.handleItemDelete.bind(this);
   }
 
+  componentWillMount(){
+    console.log('componentWillMount');
+  }
 
   render() {
+    console.log('parent render');
     return (
       <Fragment>
         <label htmlFor='insertArea'>输入内容</label>
@@ -33,6 +37,25 @@ class TodoList extends Component {
       </Fragment>
     )
   }
+
+  componentDidMount(){
+    console.log('componentDidMount');
+  }
+
+  shouldComponentUpdate(){
+    console.log('shouldComponentUpdate');
+    return true;
+  }
+
+  componentWillUpdate(){
+    console.log('componentWillUpdate')
+  }
+
+  componentDidUpdate(){
+    console.log('componentDidUpdate')
+  }
+
+
 
   getTodoItem() {
     return this.state.list.map((item, index) => {
