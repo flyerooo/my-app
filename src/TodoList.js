@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import TodoItem from './TodoItem';
+import axios from 'axios';
 import './styls.css';
 
 
@@ -15,12 +16,7 @@ class TodoList extends Component {
     this.handleItemDelete = this.handleItemDelete.bind(this);
   }
 
-  componentWillMount(){
-    console.log('componentWillMount');
-  }
-
   render() {
-    console.log('parent render');
     return (
       <Fragment>
         <label htmlFor='insertArea'>输入内容</label>
@@ -38,36 +34,29 @@ class TodoList extends Component {
     )
   }
 
-  componentDidMount(){
-    console.log('componentDidMount');
+  componentDidMount() {
+    axios.get('/api/todolist')
+      .then((res) => {
+        console.log(res.data);
+        this.setState(() => ({
+            list: [...res.data]
+          })
+        )
+      })
+      .catch(() => {
+        alert('error')
+      })
   }
-
-  shouldComponentUpdate(){
-    console.log('shouldComponentUpdate');
-    return true;
-  }
-
-  // 组件被更新之前，他会自动执行，但是在shouldComponentUpdate之后执行
-  // 如果shouldComponentUpdate返回true才会被执行
-  componentWillUpdate(){
-    console.log('componentWillUpdate')
-  }
-
-  componentDidUpdate(){
-    console.log('componentDidUpdate')
-  }
-
-
 
   getTodoItem() {
     return this.state.list.map((item, index) => {
       return (
-          <TodoItem
-            key={index}
-            content={item}
-            index={index}
-            deleteItem={this.handleItemDelete}
-          />
+        <TodoItem
+          key={index}
+          content={item}
+          index={index}
+          deleteItem={this.handleItemDelete}
+        />
       )
     })
   }
@@ -87,7 +76,6 @@ class TodoList extends Component {
   }
 
   handleItemDelete(index) {
-
     this.setState((prevState) => {
       const list = [...prevState.list];
       list.splice(index, 1);
