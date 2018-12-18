@@ -1,6 +1,6 @@
 const defaultStore ={
-  inputValue:'123',
-  list:['5','8']
+  inputValue:'',
+  list:[]
 }
 
 // reducer 可以接受state，但是绝不能修改state
@@ -17,5 +17,13 @@ export default (state=defaultStore, action) => {
     newState.inputValue = '';
     return newState;
   }
+
+  if (action.type==='delete_todo_item'){
+    const newState = JSON.parse(JSON.stringify(state));
+    newState.list.splice(action.index, 1);
+    return newState;
+  }
+
+
   return state;
 }
